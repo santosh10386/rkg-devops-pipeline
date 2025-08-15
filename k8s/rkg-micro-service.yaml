@@ -1,0 +1,19 @@
+# Kubernetes Service for RKG microservice
+# This service exposes the RKG microservice to other components in the cluster.
+# Change type to LoadBalancer for external access.
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: rkg-micro-service
+spec:
+  selector:
+    app: rkg-micro   # Must match deployment label exactly
+  ports:
+    - protocol: TCP
+      port: 80           # External port
+      targetPort: 5000   # Port inside the container
+  type: ClusterIP       # Internal service; change to LoadBalancer if external access is needed
+
+
+

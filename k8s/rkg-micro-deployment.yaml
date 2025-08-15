@@ -1,0 +1,36 @@
+# Kubernetes Deployment for RKG Microservice
+# This deployment manifest is used to deploy the RKG microservice.
+# The Docker image tag will be replaced dynamically by CI/CD workflow
+# using the commit SHA or version of the pushed changes.
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rkg-micro-deployment
+  labels:
+    app: rkg-micro
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rkg-micro
+  template:
+    metadata:
+      labels:
+        app: rkg-micro
+    spec:
+      containers:
+        - name: rkg-micro-container
+          # Image tag will be replaced by CI/CD pipeline
+          image: YOUR_DOCKER_REGISTRY/rkg-microservice:latest
+          ports:
+            - containerPort: 5000
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+
+
